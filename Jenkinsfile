@@ -1,11 +1,20 @@
-node{
-
-	 stage('clone'){
-	      git : 'https://github.com/Saeed-Ahmed-201/hotel-room-reservation.git'
-	 }
-	 stage ('compile-package'){
-	 	  bat : 'mvn compile'
-	 }
-	 
-
+pipeline {
+    agent any
+    stages {
+        stage('---clean---') {
+            steps {
+                sh "mvn clean"
+            }
+        }
+        stage('--test--') {
+            steps {
+                sh "mvn test"
+            }
+        }
+        stage('--package--') {
+            steps {
+                sh "mvn package"
+            }
+        }
+    }
 }
