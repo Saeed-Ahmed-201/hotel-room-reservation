@@ -17,5 +17,10 @@ pipeline {
                 bat "mvn package"
             }
         }
+        stage('--- depoly ---'){
+            steps{
+                    bat 'mv M:/DevOps/Jenkins/JenkinsHome/workspace/hotel-reservation/target/hotel-0.0.1-SNAPSHOT M:/tomcat/tomcat/webapps'
+            }
+        }
     }
 }
