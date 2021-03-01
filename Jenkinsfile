@@ -21,7 +21,7 @@ pipeline {
             steps{ 
                 
                    
-                    bat 'move /target/hotel-0.0.1-SNAPSHOT.jar m:/tomcat/tomcat/webapps'
+                    bat 'move M:/DevOps/JenkinsJenkinsHome/workspace/hotel-reservation/target/hotel-0.0.1-SNAPSHOT.jar  m:/tomcat/tomcat/webapps'
             }
         }
     }
