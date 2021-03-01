@@ -19,7 +19,7 @@ pipeline {
         }
         stage('--- depoly ---'){
             steps{
-                    bat 'move m:/DevOps/Jenkins/JenkinsHome/workspace/hotel-reservation/target/hotel-0.0.1-SNAPSHOT.war m:/tomcat/tomcat/webapps'
+                    bat 'move /target/hotel-0.0.1-SNAPSHOT.war m:/tomcat/tomcat/webapps'
             }
         }
     }
