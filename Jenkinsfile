@@ -19,7 +19,7 @@ pipeline {
         }
         stage('--- depoly ---'){
             steps{ 
-                   bat '/target/'
+                   bat 'cd /target/'
                     bat 'move hotel-0.0.1-SNAPSHOT  m:/tomcat/tomcat/webapps'
             }
         }
