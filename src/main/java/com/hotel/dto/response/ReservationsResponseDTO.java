@@ -1,9 +1,8 @@
 package com.hotel.dto.response;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import com.hotel.core.DTOEntity;
-import com.hotel.entity.Guest;
 import com.hotel.entity.Room;
 
 import lombok.AllArgsConstructor;
@@ -19,13 +18,14 @@ public class ReservationsResponseDTO implements DTOEntity{
 	   
 	  private Integer reservationId;
 	  
-	  private LocalDate checkInDate;
+	  private Date checkInDate;
 	 
-	  private LocalDate checkOutDate;
+	  private Date checkOutDate;
 	  
 	  private int adults;
 	  
 	  private int children;
-	 
+	  
+	  
 	  private GuestBasicInfoResponseDTO guest;
 }

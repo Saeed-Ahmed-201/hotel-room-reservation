@@ -2,6 +2,7 @@ package com.hotel.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -58,7 +59,7 @@ public class Guest {
 	   @Column(name = "driver_license", length = 100)
 	   private String driverLicense;
 	   
-	   @OneToMany(mappedBy = "guest")
+	   @OneToMany(mappedBy = "guest", cascade = CascadeType.REMOVE)
 	   @JsonManagedReference
 	   private List<Reservation> reservation;
 	   

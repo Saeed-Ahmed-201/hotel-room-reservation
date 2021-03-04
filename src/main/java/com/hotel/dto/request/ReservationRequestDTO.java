@@ -1,6 +1,8 @@
 package com.hotel.dto.request;
 
-import java.time.LocalDate;
+import java.util.Date;
+
+
 
 import com.hotel.core.DTOEntity;
 
@@ -14,11 +16,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ReservationRequestDTO implements DTOEntity{
-	  
-	  private int reservationId;
-	  
-	  private LocalDate checkInDate;
-	  private LocalDate checkOutDate;	  
+	
+	  private Date checkInDate;
+      private Date checkOutDate;	  
 
 	  private int adults;
 	  private int children;

@@ -1,6 +1,6 @@
 package com.hotel.entity;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -37,9 +39,11 @@ public class Reservation {
 	  private Integer reservationId;
 	  
 	  @Column(name = "check_in_date")
-	  private LocalDate checkInDate;
+	  @Temporal(TemporalType.DATE)
+	  private Date checkInDate;
 	  @Column(name = "check_out_date")
-	  private LocalDate checkOutDate;
+	  @Temporal(TemporalType.DATE)
+	  private Date checkOutDate;
 	  
 	  @Column(name = "adults")
 	  private int adults;

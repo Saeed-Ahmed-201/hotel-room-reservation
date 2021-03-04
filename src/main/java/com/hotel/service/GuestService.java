@@ -1,11 +1,19 @@
 package com.hotel.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.hotel.core.Mapper;
 import com.hotel.dto.request.GuestRequestDTO;
 import com.hotel.dto.request.ReservationRequestDTO;
+import com.hotel.dto.response.GuestBasicInfoResponseDTO;
+import com.hotel.dto.response.GuestReservationResponseDTO;
 import com.hotel.entity.Guest;
 import com.hotel.entity.Reservation;
 import com.hotel.entity.Room;
@@ -42,7 +50,7 @@ public class GuestService {
 	   public boolean doReservation(ReservationRequestDTO reservationRequestDTO) {
 		      try {
 		    	  boolean feedBack = true;
-		    	  if(reservationRequestDTO.getCheckInDate().isAfter(reservationRequestDTO.getCheckOutDate())) {
+		    	  if(reservationRequestDTO.getCheckInDate().after(reservationRequestDTO.getCheckOutDate())) {
 		    		  feedBack = false;
 		    	  }
 		    	  else {
@@ -71,7 +79,8 @@ public class GuestService {
 	   }
 	   
 	   public boolean updateGuest(int guestId, GuestRequestDTO guestRequestDTO) {		   
-		      boolean feedBack = true;
+		     try{
+		    	 boolean feedBack = true;
 		      Guest guest = this.guestRepository.findById(guestId).orElse(null);
 		      if(!guest.equals(null)) {
 		    	  guest.setFirstName(guestRequestDTO.getFirstName());
@@ -88,7 +97,54 @@ public class GuestService {
 		    	  feedBack = false;
 		      }
 		      return feedBack;
+		     }
+		     catch(Exception ex) {
+		    	 System.out.println(ex.getMessage());
+		    	 throw ex;
+		     }
 	   }
 	   
 	   
+	   
+	   public boolean deleteGuest(int guestId) {
+		      try {
+		    	this.guestRepository.deleteById(guestId);  
+		    	return true;
+		      }
+		      catch(Exception ex) {
+		    	  System.out.println(ex.getMessage());
+		    	  throw ex;
+		      }
+	   }
+	   
+	   public List<GuestBasicInfoResponseDTO>  retriveAllGuests(Pageable page) {
+		   	  try {
+		   		  List<GuestBasicInfoResponseDTO> guestList = new ArrayList<>();
+		   		  Page<Guest> guests = this.guestRepository.findAll(page);
+		   		  if(!guests.isEmpty()) {
+		   			  guests.forEach(guest -> {		   				  
+		   				  guestList.add((GuestBasicInfoResponseDTO) this.dtoUtil.convertToDto(guest, new GuestBasicInfoResponseDTO()));
+		   			  });
+		   		  }
+		   		  return guestList;
+		   	  }
+		   	  catch(Exception ex) {		   		  
+		   		  throw ex;  
+		   	  }
+	   }
+	   
+	   public GuestReservationResponseDTO retriveGuestRelatedReseravations(int guestId) {
+		      try {
+		    	   GuestReservationResponseDTO guestReservationResponseDTO = null;
+		    	   Guest guest = this.guestRepository.findById(guestId).orElse(null);
+		    	   if(!guest.equals(null)) {
+		    		   guestReservationResponseDTO = (GuestReservationResponseDTO) this.dtoUtil.convertToDto(guest, new GuestReservationResponseDTO());
+		    	   }
+		    	   return guestReservationResponseDTO;
+		    	   
+		      }
+		      catch(Exception ex) {
+		    	  throw ex;
+		      }
+	   }
 }

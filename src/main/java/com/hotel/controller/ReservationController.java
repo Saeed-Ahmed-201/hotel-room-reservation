@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -120,6 +121,22 @@ public class ReservationController {
 		    	 System.out.println(ex.getMessage());
 		    	 throw ex;
 		     }
+	   }
+	   
+	   
+	   @PostMapping("/add-new-reservation")
+	   public ResponseEntity<?> addNewReservation(@RequestBody ReservationRequestDTO reservationRequestDTO) {
+		      try {
+		    	    if(reservationRequestDTO.getCheckInDate().after(reservationRequestDTO.getCheckOutDate())) {
+		    	    	return ResponseEntity.ok("Checkin date is invalid compare to checkout date");
+		    	    }
+		    	    ReservationsResponseDTO reservationsResponseDTO = this.reservationService.addNewReservation(reservationRequestDTO);
+		    	    return ResponseEntity.ok(reservationsResponseDTO);
+		      }
+		      catch(Exception ex) {
+		    	  System.out.println("Error");
+		    	  throw ex;
+		      }
 	   }
 	
 }

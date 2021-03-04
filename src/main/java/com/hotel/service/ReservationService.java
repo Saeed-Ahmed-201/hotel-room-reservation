@@ -39,7 +39,7 @@ public class ReservationService {
 		    	 String feedback = "";
 		    	 Reservation reservation = this.reservationRepository.findById(reservationId).orElse(null);
                  if(!reservation.equals(null)) {
-                	 if(reservationRequestDTO.getCheckInDate().isAfter(reservationRequestDTO.getCheckOutDate())) {
+                	 if(reservationRequestDTO.getCheckInDate().after(reservationRequestDTO.getCheckOutDate())) {
                 		 feedback = "checkin date can not be greater checkout date";
                 	 }
                 	 else {
@@ -132,5 +132,24 @@ public class ReservationService {
 		    	 throw ex;
 		     }
 		  
+	  }
+	  
+	  public ReservationsResponseDTO addNewReservation(ReservationRequestDTO reservationRequestDTO) {
+		     try {
+		    	 Reservation reservation = new Reservation();
+		         Guest guest = this.guestRepository.findById(reservationRequestDTO.getGuestId()).orElse(null);
+			     Room  room = this.roomRepository.findById(reservationRequestDTO.getRoomId()).orElse(null);
+			     reservation.setGuest(guest);
+			     reservation.setRoom(room);
+			     reservation.setChildren(reservationRequestDTO.getChildren());
+			     reservation.setAdults(reservationRequestDTO.getAdults());
+			     reservation.setCheckInDate(reservationRequestDTO.getCheckInDate());
+			     reservation.setCheckOutDate(reservationRequestDTO.getCheckOutDate());	 
+			     ReservationsResponseDTO reservationResponseDTO = (ReservationsResponseDTO) this.dtoUtil.convertToDto(this.reservationRepository.save(reservation), new ReservationsResponseDTO());
+			     return reservationResponseDTO; 
+		     }
+		     catch(Exception ex) {
+		    	 throw ex;
+		     }
 	  }
 }
