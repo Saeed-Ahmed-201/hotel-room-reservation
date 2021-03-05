@@ -61,8 +61,4 @@ public class Reservation {
 	  private Room room;
 	  
 	  
-	  @OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	  @PrimaryKeyJoinColumn
-	  @JsonManagedReference
-	  private Payment payment;
 }
